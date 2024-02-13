@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Extraction Tool</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=PT+Sans:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>Word Extraction Tool</h1>
+    </header>
+    <main>
+        <section id="explanationSection">
+            <h2>Welcome!</h2>
+            <p>This is a tool to help with building a custom sentiment analysis lexicon. It allows users to upload a text or texts, standardizes the words by removing capitalization and punctuation, removes basic stop words, and then goes through each token in the text(s) one at a time. For each token, the user will have two options - to add the word to a lexicon, or to ignore it. Regardless of the user's choice, the word will be removed from the rest of the text so that it's only shown to the user once.</p>
+        </section>
+
+        <section id="inputSection">
+            <h2>Getting Started</h2>
+            <label class="large-label" for="inputFile">Select file(s):</label>
+            <input type="file" name="inputFile" id="inputFile" multiple>
+        </section>
+
+        <section id="scoringSection">
+            <div id="tokensSection">
+                <p id="token"></p>
+            </div>
+
+            <div id="buttonsSection">
+                <button id="ignoreButton">Ignore</button>
+                <button id="addButton">Add to Lexicon</button>
+            </div>
+
+        </section>
+
+    </main>
+    <footer>
+
+    </footer>
+    <script src="index.js"></script>
+</body>
+</html>
