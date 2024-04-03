@@ -1,3 +1,19 @@
+/* colors */
+header {
+    background-color: #31572C;
+}
+
+input::file-selector-button {
+    background-color: #4F772D;
+    /* accent-color: #4F772D; */
+}
+
+
+
+
+
+
+/* general */
 body {
     font-family: 'PT Sans', sans-serif;
     font-size: 16px;
@@ -7,13 +23,14 @@ body {
 
 main {
     width: 80%;
+    margin-bottom: 40px;
 }
 
 h1, h2, h3, h4, label {
     font-family: 'Montserrat', sans-serif;
 }
 
-h1, h3 {
+h1, h2, h3, h4 {
     margin-bottom: 0px;
     margin-top: 0px;
 }
@@ -31,12 +48,11 @@ h3 {
 }
 
 header {
-    background-color: #386641;
+    /* background-color: #386641; */
     padding-top: 0.5em;
     padding-bottom: 0.5em;
-}
-
-header h1 {
+    margin-bottom: 1rem;
+    width: 100%;
     color: white;
 }
 
@@ -49,28 +65,56 @@ body, header, #tokensSection {
     align-items: center;
 }
 
-header {
-    width: 100%;
-}
-
 .large-label {
     font-size: 1.2em;
 }
 
-input::file-selector-button {
+/* input::file-selector-button {
     background-color: #A7C957;
     font-size: 1rem;
     font-family: 'PT Sans', sans-serif;
     border: none;
     border-radius: 15px;
+} */
+
+input[type="file"] {
+    padding-top: 0.75rem;
+    font-size: 1rem;
 }
+
+input::file-selector-button {
+    font-size: 1rem;
+    font-family: 'PT Sans', sans-serif;
+    border: none;
+    border-radius: 15px;
+    color: white;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+
+#fileInputList {
+    display: flex;
+    flex-direction: column;
+}
+
+.fileInputAndLabel {
+    padding-bottom: 1rem;
+    /* display: flex;
+    flex-direction: column; */
+}
+
+
+
 
 #token {
     font-size: 2.5rem;
     font-family: 'Montserrat', sans-serif;
 }
 
-#buttonsSection {
+
+/* buttons */
+#buttonsSection, #listsSection {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -101,4 +145,24 @@ button {
 
 #addButton:hover {
     background-color: #517a3a;
+}
+
+
+
+
+
+#listsSection {
+    margin-top: 40px;
+}
+
+#listsSection section {
+    border: 1px solid black;
+    width: 40%;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#listsSection div {
+    display: flex;
+    justify-content: center;
 }

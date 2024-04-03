@@ -22,9 +22,21 @@
         </section>
 
         <section id="inputSection">
-            <h2>Getting Started</h2>
-            <label class="large-label" for="inputFile">Select file(s):</label>
-            <input type="file" name="inputFile" id="inputFile" multiple>
+            <h2>Inputs</h2>
+            <div id="fileInputList">
+                <div class="fileInputAndLabel">
+                    <label class="large-label" for="inputLexiconFile">Select the lexicon file(s) to start from:</label>
+                    <input type="file" name="inputLexiconFile" id="inputLexiconFile" accept=".csv,.txt" multiple>
+                </div>
+                <div class="fileInputAndLabel">
+                    <label class="large-label" for="inputStopwordsFile">Select the stop words list(s) to use:</label>
+                    <input type="file" name="inputStopwordsFile" id="inputStopwordsFile" accept=".csv,.txt" multiple>
+                </div>
+                <div class="fileInputAndLabel">
+                    <label class="large-label" for="inputTextFile">Select text file(s) to extract from:</label>
+                    <input type="file" name="inputTextFile" id="inputTextFile" accept=".txt" multiple>
+                </div>
+            </div>
         </section>
 
         <section id="scoringSection">
@@ -37,12 +49,26 @@
                 <button id="addButton">Add to Lexicon</button>
             </div>
 
+            <article id="listsSection">
+                <section id="newStopWords">
+                    <div>
+                        <h3>New Stop Words</h3>
+                    </div>
+                </section>
+                <section id="newLexiconTokens">
+                    <div>
+                        <h3>New Terms for Lexicon</h3>
+                    </div>
+                </section>
+            </article>
+
         </section>
 
     </main>
     <footer>
 
     </footer>
+    <!-- <script type="module" src="test.js"></script> -->
     <script src="index.js"></script>
 </body>
 </html>
