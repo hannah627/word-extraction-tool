@@ -3,6 +3,10 @@ header {
     background-color: #31572C;
 }
 
+/* a {
+    color:#31572C;
+} */
+
 input::file-selector-button {
     background-color: #4F772D;
     /* accent-color: #4F772D; */
@@ -165,4 +169,10 @@ button {
 #listsSection div {
     display: flex;
     justify-content: center;
+}
+
+
+
+a {
+    color:#31572C;
 }
