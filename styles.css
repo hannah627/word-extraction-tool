@@ -3,16 +3,59 @@ header {
     background-color: #31572C;
 }
 
-/* a {
-    color:#31572C;
+a {
+    color: #31572C;
+}
+
+input::file-selector-button, #addButton {
+    background-color: #4F772D;
+    color: white;
+}
+
+#addButton:hover {
+    background-color: #3a6124;
+}
+
+main > section {
+    background-color: #BECE7A;
+}
+
+.fileInputAndLabel:first-child {
+    background-color: #D5E18C;
+}
+
+.fileInputAndLabel:nth-child(even) {
+    background-color: #ECF39E;
+}
+
+.fileInputAndLabel:last-child {
+    background-color: #F2F7BC;
+}
+
+/* .fileInputAndLabel {
+    background-color: #D5E18C;
+    background-color: #ECF39E;
+    background-color: #F2F7BC;
 } */
 
-input::file-selector-button {
-    background-color: #4F772D;
-    /* accent-color: #4F772D; */
+.subSection {
+    background-color: #F2F7BC;
+}
+
+body {
+    background-color: #F7FBDA;
 }
 
 
+
+#ignoreButton {
+    background-color: #BC4749;
+    color: white;
+}
+
+#ignoreButton:hover {
+    background-color: #a53a3c;
+}
 
 
 
@@ -20,9 +63,8 @@ input::file-selector-button {
 /* general */
 body {
     font-family: 'PT Sans', sans-serif;
-    font-size: 16px;
+    font-size: 17px;
     margin: 0;
-    /* background-color: #FDFCDC; */
 }
 
 main {
@@ -52,7 +94,6 @@ h3 {
 }
 
 header {
-    /* background-color: #386641; */
     padding-top: 0.5em;
     padding-bottom: 0.5em;
     margin-bottom: 1rem;
@@ -65,24 +106,28 @@ body, main, header, #scoringSection, #tokensSection {
     flex-direction: column;
 }
 
+main > section {
+    padding: 0.75rem;
+    border-radius: 15px;
+    margin-top: 1.5rem;
+}
+
 body, header, #tokensSection {
     align-items: center;
+}
+
+.subSection, .fileInputAndLabel {
+    padding: 10px;
+    border-radius: 10px;
 }
 
 .large-label {
     font-size: 1.2em;
 }
 
-/* input::file-selector-button {
-    background-color: #A7C957;
-    font-size: 1rem;
-    font-family: 'PT Sans', sans-serif;
-    border: none;
-    border-radius: 15px;
-} */
+
 
 input[type="file"] {
-    padding-top: 0.75rem;
     font-size: 1rem;
 }
 
@@ -100,28 +145,38 @@ input::file-selector-button {
 #fileInputList {
     display: flex;
     flex-direction: column;
+    margin-top: 1rem;
 }
 
 .fileInputAndLabel {
-    padding-bottom: 1rem;
-    /* display: flex;
-    flex-direction: column; */
+    margin-bottom: 1rem;
+}
+
+.fileInputAndLabel>p {
+    margin-top: 0.25rem;
+    margin-bottom: 0px;
 }
 
 
 
+#tokensSection {
+    width: 80%;
+    align-self: center;
+    margin-bottom: 1rem;
+}
 
 #token {
     font-size: 2.5rem;
     font-family: 'Montserrat', sans-serif;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
 }
 
 
-/* buttons */
 #buttonsSection, #listsSection {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 button {
@@ -134,45 +189,32 @@ button {
 }
 
 #ignoreButton {
-    background-color: #BC4749;
-    color: white;
-}
-
-#ignoreButton:hover {
-    background-color: #a53a3c;
+    margin-right: 0.6rem;
 }
 
 #addButton {
-    background-color: #6A994E;
-    color: white;
+    margin-left: 0.6rem;
 }
-
-#addButton:hover {
-    background-color: #517a3a;
-}
-
-
-
 
 
 #listsSection {
     margin-top: 40px;
 }
 
-#listsSection section {
-    border: 1px solid black;
-    width: 40%;
-    padding-left: 10px;
-    padding-right: 10px;
+#listsSection > section {
+    margin-left: 0.75rem;
+    margin-right: 0.75rem;
+    width: 45%;
 }
 
-#listsSection div {
+#listsSection div { /* to center the headings of each list */
     display: flex;
     justify-content: center;
+    margin-bottom: 0.25rem;
 }
 
 
-
-a {
-    color:#31572C;
+#listsSection p {
+    margin-top: 0px;
+    margin-bottom: 0px;
 }

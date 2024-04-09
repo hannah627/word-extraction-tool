@@ -1,26 +1,13 @@
-// import { appendFile } from 'node:fs';
-// import addToFile from './test';
-
-const STOP_WORDS_LINK = "stop_words.txt";
-
-let stopWordsList = [];
-
-const AFINN_LEXICON_LINK = "afinn_lexicon-en-165.txt";
-const LEXICON_LINK = "lexicon.txt";
-
-let AFINN_obj = {};
-let customLexiconObj = {};
-let fullLexicon = {};
-
 let currTokensList
 let currToken = 0;
 
 let tokensToAddToStopWords = [];
 let tokensToAddToLexicon = [];
 
-let lexiconInputStatus = "";
-let stopwordsInputStatus = "";
-let textFileInputStatus = "";
+let globalLexiconWords = [];
+let globalStopWords = [];
+
+let numLexiconFilesProcessed = 0;
 
 
 // when the page loads, call "init"
@@ -29,9 +16,6 @@ window.addEventListener("load", init);
 
 // the function that runs when the page loads;
 function init() {
-
-    // getFileStopWords();
-    // getFileLexicons(); // creates global JSON lexicon objects for the AFINN and historical lexicons
 
     // hiding things that shouldn't be visible when the page loads
     id("scoringSection").style.display = "none";
@@ -42,13 +26,14 @@ function init() {
     id("ignoreButton").addEventListener("click", ignoreButtonClick);
     // id("inputTextFile").addEventListener("change", processInputtedTextFile);
 
-    id("inputLexiconFile").addEventListener("change", (e) => {textFileInputChange(e)});
-    id("inputStopwordsFile").addEventListener("change", (e) => {textFileInputChange(e)});
-    id("inputTextFile").addEventListener("change", (e) => {textFileInputChange(e)});
+    // might not want to do this - just call to make lexicon and stopwords when text file has been inputted?
+    // id("inputLexiconFile").addEventListener("change", (e) => {lexiconFileInputChange(e)});
+    // id("inputStopwordsFile").addEventListener("change", (e) => {stopwordsFileInputChange(e)});
 
-    // id("inputLexiconFile").addEventListener("change", fileInputChange);
-    // id("inputStopwordsFile").addEventListener("change", fileInputChange);
-    // id("inputTextFile").addEventListener("change", fileInputChange);
+
+    // id("inputTextFile").addEventListener("change", processInputtedTextFile);
+    id("inputTextFile").addEventListener("change", textFileInputted);
+
 
 
 
@@ -57,14 +42,17 @@ function init() {
     // if so, then do the last part
     // or - could add a go button, that's disabled until all three things have a file selected
 
+    // or - it doesn't really matter if they run it without a lexicon or stopwords list, it just means we don't remove anything
+    // so just - run extraction whenever new text file, lexicon, or stopwords file uploaded - but don't worry about needing to
+    // ensure lexicon and stopwords are there - just need to ensure there's always a text file
 }
 
 function addButtonClick() {
     // add to lexicon
     let token = currTokensList[currToken];
-    fullLexicon[token] = 6;
+    // fullLexicon[token] = 6;
     tokensToAddToLexicon.push(token);
-    let line = token + " 6"
+    let line = token + ",6"
     if (id("listsSection").style.display == "none") {
         id("listsSection").style.display = "flex"
     }
@@ -76,7 +64,7 @@ function addButtonClick() {
 function ignoreButtonClick() {
     // add to stopwords list
     let token = currTokensList[currToken];
-    stopWordsList.push(token);
+    globalStopWords.push(token);
     tokensToAddToStopWords.push(token);
     // this section is hidden until at least one word is added to one of the sections
     if (id("listsSection").style.display == "none") {
@@ -94,70 +82,30 @@ function displayNextToken() {
 
 
 
-// async function getFileStopWords() {
-//     await fetch(STOP_WORDS_LINK)
-//         .then(x => x.text())
-//         .then(x => processFileStopWords(x, stopWordsList));
-// }
-
-// function processFileStopWords(list, resultList) {
-//     let terms = list.split('\n');
-//     terms.forEach((term) => {
-//         resultList.push(term);
-//     })
-// }
-
-
-
-// async function getFileLexicons() {
-// // call this once when page loads; make JSON lexicons for both, then save those to variables
-// // then use another function to decide which of the lexicon vars to use
-//     Promise.all([
-//         fetch(AFINN_LEXICON_LINK).then(x => x.text()),
-//         fetch(LEXICON_LINK).then(x => x.text())
-//     ]).then(([afinnLexicon, customLexicon]) => {
-//         processFileLexicon(afinnLexicon, '\t', AFINN_obj);
-//         processFileLexicon(customLexicon, ' ', customLexiconObj);
-//         fullLexicon = {...AFINN_obj, ...customLexiconObj};
-//     });
-// }
-
-// function processFileLexicon(lexicon, separator, lexiconObj) {
-//     let lines = lexicon.split('\n');
-//     lines.forEach((line) => {
-//         let [word, score] = line.split(separator);
-
-//         lexiconObj[word] = score;
-//     })
-// }
 
 
 
 
 
+async function textFileInputted() {
+    id("scoringSection").style.display = "flex"; // unhide the buttons
 
+    await getLexiconFiles();
+    await getStopWordsFiles();
+    processInputtedTextFile();
 
-
-
-
-
-
-
+}
 
 
 
 function processInputtedTextFile() {
-    id("scoringSection").style.display = "flex"; // unhide the buttons
+    let fileInput = id("inputTextFile");
     let fr = new FileReader();
     fr.onload = function() {
         let file_text = fr.result;
         processText(file_text);
-        // might need to add something here to update lexicons and stopwords lists
     }
-    for (let i = 0; i < this.files.length; i++) {
-        let currFile = this.files[i];
-        fr.readAsText(currFile);
-    }
+    fr.readAsText(fileInput.files[0]);
 }
 
 function processText(text) {
@@ -165,10 +113,9 @@ function processText(text) {
 
     let formatted_text = lowerCaseAndRemovePunctuationOfText(text);
     let tokens = tokenizeText(formatted_text);
-
     // we don't want to show any words already in lexicon or stop words lists
-    let tokensSansStopWords = filterTokens(tokens, stopWordsList);
-    let tokensSansLexiconTerms = filterTokens(tokensSansStopWords, Object.keys(fullLexicon));
+    let tokensSansStopWords = filterTokens(tokens, globalStopWords);
+    let tokensSansLexiconTerms = filterTokens(tokensSansStopWords, globalLexiconWords);
 
     // removing duplicate words from the words we'll show to users
     for (let i = 0; i < tokensSansLexiconTerms.length; i++) {
@@ -184,33 +131,74 @@ function processText(text) {
 
 
 
-// function fileInputChange(e) {
-    // let target = e.target;
-    // console.log(target);
 
-// }
-
-function textFileInputChange(e) {
-    let files = e.currentTarget.files;
+async function getLexiconFiles() {
+    globalLexiconWords = [];
+    let fileInput = id("inputLexiconFile");
+    let files = fileInput.files;
     for (let i = 0; i < files.length; i++) {
         let file = files[i];
-        let reader = new FileReader();
-        reader.onload = (function() {
-            // if (files.length == 1) {
-            //     return function() { singleFileOnLoadHandler(this) }
-            // }
-            // else {
-            //     return function() {
-            //         onLoadHandler(this, file);
-            //         onLoadEndHandler(files.length);
-            //    };
-            // }
-            onLoadHandler(this, file);
-            onLoadEndHandler(files.length);
-        })(file);
-        reader.readAsText(file);
+        let fr = new FileReader();
+        fr.onload = function () {
+            let file_content = fr.result;
+            processLexicon(file_content);
+            // checkIfAllLexiconsLoaded(files.length); // if i decide that i need to do things only after all lexicons loaded
+        };
+        fr.readAsText(file);
     }
 }
+
+async function processLexicon(fileContent) {
+    let lines = fileContent.split('\n');
+    let columns = [];
+    lines.forEach(line => {
+        columns = line.split(',');
+        let token = columns[0];
+        globalLexiconWords.push(token);
+    });
+}
+
+
+
+
+async function getStopWordsFiles() {
+    globalStopWords = [];
+    let fileInput = id("inputStopwordsFile");
+    let files = fileInput.files;
+    for (let i = 0; i < files.length; i++) {
+        let file = files[i];
+        let fr = new FileReader();
+        fr.onload = function () {
+            let file_content = fr.result;
+            processStopWords(file_content);
+        };
+        fr.readAsText(file);
+    }
+}
+
+function processStopWords(fileContent) {
+    let lines = fileContent.split('\n');
+    for (let i = 0; i < lines.length; i++) {
+        globalStopWords.push(lines[i]);
+        // now that all functions are being called by textFileInputted, could probably replace global vars w/ params
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

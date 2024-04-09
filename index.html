@@ -6,6 +6,9 @@
     <title>Word Extraction Tool</title>
     <link rel="stylesheet" href="styles.css">
 
+    <!-- changing the favicon - tree planting icon by Icons8 - https://icons8.com/icon/65047/tree-planting" -->
+    <link rel="icon" href="icons8-tree-planting-96.png" type="image/png">
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,14 +21,14 @@
     <main>
         <section id="explanationSection">
             <h2>Welcome!</h2>
-            <p>This is a tool to help with building a custom sentiment analysis lexicon. It allows users to upload a text or texts, standardizes the words by removing capitalization and punctuation, removes basic stop words, and then goes through each token in the text(s) one at a time. For each token, the user will have two options - to add the word to a lexicon, or to ignore it. Regardless of the user's choice, the word will be removed from the rest of the text so that it's only shown to the user once.</p>
+            <p>This is a tool to help with building a custom sentiment analysis lexicon. It allows users to upload a text, standardizes the words by removing capitalization and punctuation, removes basic stop words, and then goes through each token in the text(s) one at a time. For each token, the user will have two options - to add the word to a lexicon, or to ignore it. Regardless of the user's choice, the word will be removed from the rest of the text so that it's only shown to the user once.</p>
         </section>
 
         <section>
             <h2>Instructions</h2>
             <p>In the Inputs section, upload files for each of the file selectors - at least one CSV or text file for your lexicon and for your stop words list, and a text file to extract words from. If you don't have a lexicon or stopwords list started yet, you can download templates below. You can upload multiple files for each - if you upload multiple lexicons and/or stop words lists, they will be combined to create one large lexicon and one large stop words list. If you upload multiple texts to extract from, the words from the second text file will be pulled after all the words from the first file have been added to either the lexicon or the stop words list.</p>
             <p>After that, the first word from the text (that's not in the stop words list or the lexicon already) will appear, along with two buttons below that. The first button says "Ignore" and the second says "Add to Lexicon". If the current word is one you're interested in, click the "Add to Lexicon" button. Otherwise, click "Ignore" and it will be added to the stop words list. Once an option has been clicked, the next word will be shown, and so on.</p>
-            <p>As you continue using the tool, two lists will be created. When you're ready to stop for a bit, be sure to copy the stop words list and paste it at the bottom of your stop words file (or create a new file for it), and do the same for the lexicon list, but with your lexicon file.</p>
+            <p>As you continue using the tool, two lists will be created, one of the stop words and one of the terms for the lexicon, followed by ", 6", for ease of copying into a lexicon CSV. The 6 is a placeholder for whatever score you wish to give the term, chosen because 6 is out of bounds on a -1 to 1 and a -5 to 5 scoring scale. When you're ready to stop, be sure to copy the stop words list and paste it at the bottom of your stop words file (or create a new file for it), and do the same for the lexicon list, but with your lexicon file.</p>
         </section>
 
         <section id="inputSection">
@@ -33,23 +36,23 @@
             <div id="fileInputList">
                 <div class="fileInputAndLabel">
                     <label class="large-label" for="inputLexiconFile">Select the lexicon file(s) to start from:</label>
-                    <input type="file" name="inputLexiconFile" id="inputLexiconFile" accept=".csv,.txt" multiple>
-                    <p>If you don't already have a lexicon file, <a href="./lexicon_template.csv" download="lexicon_template">you can download and use this template.</a></p>
+                    <input type="file" name="inputLexiconFile" id="inputLexiconFile" accept=".csv" multiple>
+                    <p>If you don't already have a lexicon file, <a href="./lexicon-template.csv" download="lexicon-template.csv">you can download and use this template.</a></p>
                 </div>
                 <div class="fileInputAndLabel">
                     <label class="large-label" for="inputStopwordsFile">Select the stop words list(s) to use:</label>
                     <input type="file" name="inputStopwordsFile" id="inputStopwordsFile" accept=".csv,.txt" multiple>
-                    <p>If you don't already have a stop words file, <a href="./stop-words_template.csv" download="stopwords_template">you can download and use this template.</a></p>
+                    <p>If you don't already have a stop words file, <a href="./stop-words-template.csv" download="stopwords-template.csv">you can download and use this template.</a></p>
                 </div>
                 <div class="fileInputAndLabel">
-                    <label class="large-label" for="inputTextFile">Select text file(s) to extract from:</label>
-                    <input type="file" name="inputTextFile" id="inputTextFile" accept=".txt" multiple>
+                    <label class="large-label" for="inputTextFile">Select text file to extract from:</label>
+                    <input type="file" name="inputTextFile" id="inputTextFile" accept=".txt">
                 </div>
             </div>
         </section>
 
         <section id="scoringSection">
-            <div id="tokensSection">
+            <div id="tokensSection" class="subSection">
                 <p id="token"></p>
             </div>
 
@@ -59,12 +62,12 @@
             </div>
 
             <article id="listsSection">
-                <section id="newStopWords">
+                <section id="newStopWords" class="subSection">
                     <div>
                         <h3>New Stop Words</h3>
                     </div>
                 </section>
-                <section id="newLexiconTokens">
+                <section id="newLexiconTokens" class="subSection">
                     <div>
                         <h3>New Terms for Lexicon</h3>
                     </div>
