@@ -7,10 +7,20 @@ a {
     color: #31572C;
 }
 
-input::file-selector-button, #addButton {
+nav li a:hover:not(:has(img)),
+#activeNavbarLink:hover {
+    background-color: #3b5b1f;
+}
+
+#activeNavbarLink {
+    background-color: #456924;
+}
+
+input::file-selector-button, #addButton, nav ul {
     background-color: #4F772D;
     color: white;
 }
+
 
 #addButton:hover {
     background-color: #3a6124;
@@ -63,7 +73,7 @@ body {
 /* general */
 body {
     font-family: 'PT Sans', sans-serif;
-    font-size: 17px;
+    font-size: 16px;
     margin: 0;
 }
 
@@ -96,10 +106,45 @@ h3 {
 header {
     padding-top: 0.5em;
     padding-bottom: 0.5em;
-    margin-bottom: 1rem;
+    /* margin-bottom: 1rem; */
     width: 100%;
     color: white;
 }
+
+nav {
+    width: 100%;
+}
+
+nav ul {
+    width: 100%;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+nav li {
+    float: left;
+}
+
+nav li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+nav img {
+    width: 25px;
+    height: 25px;
+}
+
+nav a:has(img) {
+    padding-bottom: 4px;
+    padding-top: 12px;
+}
+
 
 body, main, header, #scoringSection, #tokensSection {
     display: flex;
