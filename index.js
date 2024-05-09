@@ -1,4 +1,4 @@
-let currTokensList
+let currTokensList = [];
 let currToken = 0;
 
 let tokensToAddToStopWords = [];

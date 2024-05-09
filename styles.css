@@ -30,15 +30,15 @@ main > section {
     background-color: #BECE7A;
 }
 
-.fileInputAndLabel:first-child {
+.fileInputAndLabel:first-child, .instructionsPara {
     background-color: #D5E18C;
 }
 
-.fileInputAndLabel:nth-child(even) {
+.fileInputAndLabel:nth-child(even), .instructionsPara:nth-child(odd) {
     background-color: #ECF39E;
 }
 
-.fileInputAndLabel:last-child {
+.fileInputAndLabel:last-child, .instructionsPara:last-child {
     background-color: #F2F7BC;
 }
 
@@ -161,7 +161,7 @@ body, header, #tokensSection {
     align-items: center;
 }
 
-.subSection, .fileInputAndLabel {
+.subSection, .fileInputAndLabel, .instructionsPara {
     padding: 10px;
     border-radius: 10px;
 }
